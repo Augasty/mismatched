@@ -1,2 +1,11 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+    import {createGrid} from './emoji'
+    const statetype = ['start','playing','paused','won','lost']
+
+    let state = statetype[0]
+    let size = 20
+    let grid = createGrid(size)
+
+
+    console.log(grid)
+</script>
