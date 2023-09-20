@@ -1,0 +1,37 @@
+<script>
+  let size = 10;
+  let state = "start";
+
+  const func = (x) => {
+    return 2 + x;
+  };
+
+  $: grid = state !== "start" ? func(size) : null;
+
+  let cursize = 20;
+  function handleRangeInput(event) {
+    // Update the rangeValue variable with the current input value
+    cursize = event.target.value;
+  }
+</script>
+
+{#if state === "start"}
+  <div>
+    <div class="range">
+      <input
+        type="range"
+        min="10"
+        max="100"
+        step="1"
+        bind:value={size}
+        on:input={handleRangeInput}
+      />
+      <p>Selected value: {size}</p>
+    </div>
+    <button on:click={() => (state = "playing")}>Play</button>
+  </div>
+{/if}
+
+{#if state === "playing"}
+  <div>{grid}</div>
+{/if}
