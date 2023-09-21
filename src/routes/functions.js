@@ -37,9 +37,10 @@ function shuffle(items){
 }
 
 
-export function selectCard(idx) {
+export function selectCard(grid,idx) {
+    if (matched_values.includes(grid[idx])) return
     selected.update((arr)=>[...arr,idx])
-    console.log(selected_value)
+    console.log(selected_value,matched_values)
   }
 
   export function matchCards( grid) {
