@@ -1,18 +1,12 @@
 <script>
-  let size = 10;
-  let state = "start";
+ let nums = []
 
-  const func = (x) => {
-    return 2 + x;
+  const func = (idx) => {
+    nums = nums.concat(idx)
   };
 
-  $: grid = state !== "start" ? func(size) : null;
+  $:console.log(nums)
 
-  let cursize = 20;
-  function handleRangeInput(event) {
-    // Update the rangeValue variable with the current input value
-    cursize = event.target.value;
-  }
 </script>
 
 {#if state === "start"}
@@ -26,9 +20,9 @@
         bind:value={size}
         on:input={handleRangeInput}
       />
-      <p>Selected value: {size}</p>
+      <p>Selected value: {nums}</p>
     </div>
-    <button on:click={() => (state = "playing")}>Play</button>
+    <button on:click={()=>func(4)}>Play</button>
   </div>
 {/if}
 

@@ -1,4 +1,4 @@
-@import '@fontsource/poppins';
+ @import '@fontsource/poppins';
 
 * {
 	margin: 0;
@@ -21,8 +21,7 @@ body {
 
 body {
 	display: grid;
-	place-content: center;
-	padding: 2rem;
+	
 	font-family: 'Poppins', sans-serif;
 	color: var(--txt-1);
 	background-color: var(--bg-1);
@@ -51,4 +50,4 @@ button {
 	border: none;
 	text-transform: uppercase;
 	cursor: pointer;
-}
+} 

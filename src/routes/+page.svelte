@@ -1,26 +1,42 @@
 <script>
-  import { createGrid } from "./emoji";
-  const statetype = ["start", "playing", "paused", "won", "lost"];
+// @ts-nocheck
 
-  let state = statetype[0];
-  let size = 20
+  import { createGrid, matchCards, selectCard } from "./functions";
+  import { selected, matches } from "./store";
+
+  let selected_value;
+  let matched_values;
+
+  selected.subscribe((value) => {
+    selected_value = value;
+  });
+  matches.subscribe((value) => {
+    matched_values = value;
+  });
+  let state = "start";
+  let size = 20;
   $: grid = state !== "start" ? createGrid(size) : null;
-  if (grid){
 
-    let maxMatches = grid.length / 2;
-  }
 
-  let selected = [];
-  let matches = [];
 
-  $:console.log(size,grid);
 
   // range update
-  let cursize = 20
+  let cursize = 20;
   function handleRangeInput(event) {
     cursize = event.target.value;
   }
-  
+
+
+  $: if (grid) {
+    let maxMatches = grid.length / 2;
+    maxMatches === matched_values.length && gameWon();
+  }
+  $: selected_value.length === 2 && matchCards(grid);
+
+  function gameWon() {
+    state = "won";
+  }
+
 </script>
 
 
@@ -30,11 +46,21 @@
 
 
 
+
+
+
+<!-- UI -->
 {#if state === "start"}
   <h1>mismatched</h1>
   <div class="range">
-
-    <input type="range" min="10" max="80" step="5" bind:value={size} on:input={handleRangeInput}/>
+    <input
+      type="range"
+      min="10"
+      max="80"
+      step="5"
+      bind:value={size}
+      on:input={handleRangeInput}
+    />
     <p>Selected value: {size}</p>
   </div>
   <button on:click={() => (state = "playing")}>Play</button>
@@ -42,14 +68,21 @@
 
 {#if state === "playing"}
 
-  <h1>Match pairs</h1>
+<h1>Match pairs</h1>
+<div class="container">
   <div class="cards">
     {#each grid as card, idx}
-      <button class="card">
-        <div>{card}</div>
-      </button>
-    {/each}
+
+    {@const isSelected = selected_value.includes(idx)}
+        <button class="card" 
+        class:selected={isSelected}        
+        on:click={() => selectCard(idx)}>
+          <div>{card}</div>
+        </button>
+      {/each}
+    </div>
   </div>
+  <h1>-</h1>
 {/if}
 
 {#if state === "lost"}
@@ -62,15 +95,22 @@
   <button on:click={() => (state = "playing")}>Play again</button>
 {/if}
 
-
 <style>
   .range {
     text-align: center;
     padding: 20px;
   }
 
-  .cards{
+  .container {
     display: grid;
+
+    place-content: center;
+    padding: 2rem;
+  }
+  .cards {
+    display: grid;
+
+    place-content: center;
     grid-template-columns: repeat(5, 1fr);
     gap: 0.4rem;
   }
@@ -81,7 +121,7 @@
     font-size: 4rem;
     background-color: var(--bg-2);
 
-    &.selected{
+    &.selected {
       border: 4px solid var(--border);
     }
   }
