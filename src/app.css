@@ -34,13 +34,17 @@ h1 {
 }
 
 h1 + button {
-	width: max-content;
+	/* width: max-content; */
 	margin-top: 2rem;
 	margin-inline: auto;
 	border: 4px solid var(--border);
+	
 }
 
 button {
+	width: 20rem;
+	height:  6rem;
+	justify-self: center;
 	padding: 1.5rem;
 	font-size: 2rem;
 	font-weight: 900;
@@ -50,4 +54,5 @@ button {
 	border: none;
 	text-transform: uppercase;
 	cursor: pointer;
+	/* background-color: aquamarine !important */
 } 
