@@ -2,12 +2,17 @@
   // @ts-nocheck
 
   import { createGrid, matchCards, selectCard } from "./functions";
-  import { selected, matches } from "./store";
+  import { selected, matches, toggleValue } from "./store";
+  import Toggle from "./Toggle.svelte";
   import "./page.css";
 
   let selected_value;
   let matched_values;
+  let curr_toggleValue;
 
+  toggleValue.subscribe((value) => {
+    curr_toggleValue = value;
+  });
   selected.subscribe((value) => {
     selected_value = value;
   });
@@ -20,15 +25,14 @@
   let size = 8;
   let timerId = null;
 
-  
   $: grid = state !== "start" ? createGrid(size) : null;
-  $:  time = size * 2 + 4;
+  $: time = size * 2 + 4;
 
   // game running functions
   function startGameTimer() {
     function countdown() {
       state === "playing" && (time -= 1);
-      console.log(time, "xx");
+      // console.log(time, "xx");
     }
 
     timerId = setInterval(countdown, 1000);
@@ -39,7 +43,7 @@
     selected.update(() => []);
     matches.update(() => []);
     timerId = null;
-    time = size * 2 + 4
+    time = size * 2 + 4;
     // console.log(grid)
   }
   function gameWon() {
@@ -51,8 +55,6 @@
     resetGame();
   }
 
-
-
   // reactive declearations
   $: if (grid) {
     let maxMatches = grid.length / 2;
@@ -63,8 +65,9 @@
     !timerId && startGameTimer();
   }
   $: time == -1 && gameLost();
-  $: if ((matched_values.length * 2) / size == 1){
-    setTimeout(() => gameWon(), 500)}
+  $: if ((matched_values.length * 2) / size == 1) {
+    setTimeout(() => gameWon(), 500);
+  }
 </script>
 
 <!-- UI -->
@@ -74,6 +77,9 @@
     <input type="range" min="8" max="40" step="4" bind:value={size} />
     <p class="grid-size-text">Grid Size: {size}</p>
   </div>
+  <p class="grid-size-text">Use {curr_toggleValue?'face':'animal'} emojis</p>
+  <Toggle />
+
   <button class="bgbutton" on:click={() => (state = "playing")}>Play</button>
 {/if}
 
@@ -114,5 +120,7 @@
     <input type="range" min="8" max="40" step="4" bind:value={size} />
     <p class="grid-size-text">Grid Size: {size}</p>
   </div>
-  <button class="bgbutton" on:click={() => (state = "playing")}>Play again</button>
+  <button class="bgbutton" on:click={() => (state = "playing")}
+    >Play again</button
+  >
 {/if}

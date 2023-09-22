@@ -99,6 +99,8 @@ input[type="range"] {
   
   /* Style for the <p> element with class "grid-size-text" */
   .grid-size-text {
+    text-align: center;
     font-size: 25px;
     margin-top: 10px;
+    transition: 0.3ms ease-in;
   }
