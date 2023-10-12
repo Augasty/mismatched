@@ -1,9 +1,10 @@
 <script>
-    import '../app.css'
+  import "../app.css";
 </script>
 
 <svelte:head>
-    <title>mismatched</title>
+  <title>mismatched</title>
 </svelte:head>
+<slot />
 
-<slot/>
+

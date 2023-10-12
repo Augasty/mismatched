@@ -9,6 +9,7 @@
 :root {
 	--txt-1: hsl(220 10% 98%);
 	--bg-1: hsl(220 20% 10%);
+	--bg-3: hsl(312, 25%, 66%);
 	--bg-2: hsl(220 20% 20%);
 	--border: hsl(180 100% 50%);
 	--pulse: hsl(9 100% 64%);
@@ -21,10 +22,18 @@ body {
 
 body {
 	display: grid;
-	
-	font-family: 'Poppins', sans-serif;
 	color: var(--txt-1);
 	background-color: var(--bg-1);
+	font-family: 'Poppins', sans-serif;
+}
+.dark{
+	color: var(--txt-1);
+	background-color: var(--bg-1);
+}
+
+.light{
+	color: var(--txt-1);
+	background-color: var(--bg-3);
 }
 
 h1 {

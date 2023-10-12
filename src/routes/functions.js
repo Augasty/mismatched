@@ -63,5 +63,5 @@ export function selectCard(grid,idx) {
     if (grid[first] === grid[second]) {
       matches.update((arr)=>[...arr,grid[first]])
     }
-    setTimeout(()=>selected.update(()=>[]),300)
+    setTimeout(()=>selected.update(()=>[]),400)
   }

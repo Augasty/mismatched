@@ -5,6 +5,7 @@
   import { selected, matches, toggleValue } from "./store";
   import Toggle from "./Toggle.svelte";
   import "./page.css";
+  import { toggleTheme } from "./theme";
 
   let selected_value;
   let matched_values;
@@ -22,8 +23,10 @@
 
   let time;
   let state = "start";
-  let size = 8;
+  let size = 12;
   let timerId = null;
+  
+  let zen = false
 
   $: grid = state !== "start" ? createGrid(size) : null;
   $: time = size * 2 + 4;
@@ -61,24 +64,29 @@
     maxMatches === matched_values.length && gameWon();
   }
   $: selected_value.length === 2 && matchCards(grid);
-  $: if (state == "playing") {
+  $: if (state == "playing" && !zen) {
     !timerId && startGameTimer();
   }
-  $: time == -1 && gameLost();
+  $: time == -1  && gameLost();
+  // $: console.log(time,zen)
   $: if ((matched_values.length * 2) / size == 1) {
     setTimeout(() => gameWon(), 500);
   }
 </script>
 
+
+
 <!-- UI -->
 {#if state === "start"}
   <h1>mismatched</h1>
   <div class="range">
-    <input type="range" min="8" max="40" step="4" bind:value={size} />
+    <input type="range" min="12" max="42" step="6" bind:value={size} />
     <p class="grid-size-text">Grid Size: {size}</p>
   </div>
   <p class="grid-size-text">Use {curr_toggleValue?'face':'animal'} emojis</p>
   <Toggle />
+  <p class="grid-size-text">Zen Mode</p>
+  <input type="checkbox" bind:checked={zen} on:click={toggleTheme}/>
 
   <button class="bgbutton" on:click={() => (state = "playing")}>Play</button>
 {/if}
@@ -87,10 +95,19 @@
   <h1>Match pairs</h1>
 
   <div class="container">
+    
     <div class="headerContainer">
       <span class="pairs">{matched_values.length}/{size / 2} pairs found</span>
-      <span class="timer" class:pulse={time <= 10}>{time}</span>
+      
+      <span class="timer" class:pulse={time <= 10}>
+        {#if zen===false}
+        {time}
+        {:else}
+        ZEN
+        {/if}  
+        </span>
     </div>
+    
     <div class="cards">
       {#each grid as card, idx}
         {@const isSelected = selected_value.includes(idx)}
@@ -124,3 +141,5 @@
     >Play again</button
   >
 {/if}
+
+
