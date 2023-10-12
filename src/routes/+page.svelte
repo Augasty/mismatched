@@ -80,7 +80,7 @@
 {#if state === "start"}
   <h1>mismatched</h1>
   <div class="range">
-    <input type="range" min="12" max="42" step="6" bind:value={size} />
+    <input type="range" min="6" max="42" step="6" bind:value={size} />
     <p class="grid-size-text">Grid Size: {size}</p>
   </div>
   <p class="grid-size-text">Use {curr_toggleValue?'face':'animal'} emojis</p>
@@ -133,13 +133,17 @@
 
 {#if state === "lost" || state === "won"}
   <h1>You {state}! {state == "won" ? "🎉🎊" : "💩🫠"}</h1>
+  <h2>Wanna give it another go?</h2>
   <div class="range">
-    <input type="range" min="8" max="40" step="4" bind:value={size} />
+    <input type="range" min="6" max="42" step="6" bind:value={size} />
     <p class="grid-size-text">Grid Size: {size}</p>
   </div>
-  <button class="bgbutton" on:click={() => (state = "playing")}
-    >Play again</button
-  >
+  <p class="grid-size-text">Use {curr_toggleValue?'face':'animal'} emojis</p>
+  <Toggle />
+  <p class="grid-size-text">Zen Mode</p>
+  <input type="checkbox" bind:checked={zen} on:click={toggleTheme}/>
+
+  <button class="bgbutton" on:click={() => (state = "playing")}>Play again</button>
 {/if}
 
 
