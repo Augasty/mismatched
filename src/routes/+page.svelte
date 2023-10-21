@@ -78,7 +78,7 @@
 
 <!-- UI -->
 {#if state === "start"}
-  <h1>mismatched</h1>
+  <h1>mismatched: Hi Archi</h1>
   <div class="range">
     <input type="range" min="6" max="42" step="6" bind:value={size} />
     <p class="grid-size-text">Grid Size: {size}</p>
